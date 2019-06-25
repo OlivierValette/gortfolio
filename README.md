@@ -1,6 +1,7 @@
 #  A Portfolio with Gatsby
 
-Gatsby is a React framework for websites (and not only static websites).
+Gatsby is a React framework for fast websites and web applications (and not only static websites).
+Powered by React and GraphQL.
 
 Following [The Great Gatsby Bootcamp](https://www.youtube.com/watch?v=kzWIUX3CpuI)
 
@@ -54,8 +55,9 @@ Each file contains a React component.
 
 ### Links
 
-For internal links, Gatsby provides a JSX `<Link`to='/xxx'>` component with optimized rendering.
-External links use the standard HTML \<a> tag
+For internal links, Gatsby provides a JSX `<Link to='/xxx'>` component with optimized rendering.
+
+External links use the standard HTML `<a>` tag
 
 ### Shared page components
 
@@ -82,3 +84,23 @@ module.exports = {
     ...
 }
 ```
+
+#### reset css
+
+A reset css file, which can be inserted in the `index.scss` file, can be found at links.mead.io/gatsbystyles 
+
+
+### CSS Modules
+
+CSS modules allow to define locally scoped styles.
+For a component Layout of a `layout.js` file for instance, scss is defined in a `layout.module.scss` associated file.
+Style is imported with:
+```js
+import layoutStyles from './layout.module.scss';
+```
+and used with:
+```jsx harmony
+<div className={layoutStyles.container}>
+```
+where `container` is a class defined in `layout.module.scss`
+

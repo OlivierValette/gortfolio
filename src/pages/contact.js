@@ -9,7 +9,10 @@ const ContactPage = () => {
       <p>10 rue Henri Sée, 35700 Rennes</p>
       <p>+33 6 73 27 30 60</p>
       <p>olivier.valette@spi10.com</p>
-      <p>Twitter <a href='https://twitter.com/OlivierValette' target="_blank">@OlivierValette</a></p>
+      <p>Twitter <a href='https://twitter.com/OlivierValette'
+                    target="_blank"
+                    rel="noopener noreferrer">@OlivierValette</a>
+      </p>
     </Layout>
   )
 }
