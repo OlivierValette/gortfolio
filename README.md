@@ -30,12 +30,6 @@ Following [The Great Gatsby Bootcamp](https://www.youtube.com/watch?v=kzWIUX3Cpu
     cd portfolio
     npm run develop
     ```
-    
-    or
-    
-    ```sh
-    gatsby develop
-    ```
 
 1.  **Open the source code and start editing!**
 
@@ -45,6 +39,20 @@ Following [The Great Gatsby Bootcamp](https://www.youtube.com/watch?v=kzWIUX3Cpu
 
     Open the `portfolio` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
+1. **Replace GraphiQL IDE by playground**
+
+     Create a `.env.development` file with:
+     ```dotenv
+     GATSBY_GRAPHQL_IDE=playground
+     ```
+     In terminal, run:
+     ```sh
+     npm install --save-dev env-cmd
+     ```
+     and change `develop` script in `package.json` with:
+     ```json
+      "env-cmd -f .env.development gatsby develop"
+      ```
 
 ##  Tutorial
 
@@ -104,3 +112,104 @@ and used with:
 ```
 where `container` is a class defined in `layout.module.scss`
 
+### GraphQL API
+
+Use of GraphQL API to get data dynamically from various sources: CMS, Markdown files, API, databases, YAML, JSON or csv... 
+
+#### Query site configuration data in `gatsby-config-js`
+
+In `gatsby-config-js`, add:
+```json
+  siteMetadata: {
+    title: 'Portfolio',
+    author: 'Olivier Valette',
+  },
+```
+Retrieve data with a query;
+first add:
+```js
+import { graphql, useStaticQuery } from 'gatsby';
+```
+execute query:
+```js
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `);
+```
+and use data retrieved using the same structure 
+`{data.site.siteMetadata.title}`
+
+#### Query data in other files
+
+Install the `gatsby-source-filesystem` plugin which creates File nodes from files.
+```sh
+npm install --save gatsby-source-filesystem
+```
+some configuration is needed adding in file `gatsby-config-js`:
+```json
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    },
+```
+A “transformer” plugin is needed which can transform File nodes into various other types of data:
+- `gatsby-transformer-json` transforms JSON files into JSON data nodes
+- `gatsby-transformer-remark` transforms markdown files into MarkdownRemark nodes from which you can query an
+ HTML representation of the markdown
+
+Install `gatsby-transformer-remark` with:
+```sh
+npm install --save gatsby-transformer-remark
+```
+just adding the plugin in the configuration file `gatsby-config.js`
+
+query with:
+```js
+const posts = useStaticQuery(graphql`
+    query {
+      allMarkdownRemark {
+        edges {
+          node {
+            frontmatter {
+              title
+              date
+            }
+            html
+            excerpt
+          }
+        }
+      }
+    }
+  `);
+```
+To get an array of nodes in `{posts.allMarkdownRemark.edges}`
+
+#### Adding data in nodes with the Gatsby Node API
+
+To add a slug for instance, first creat a In `gatsby-node-js` file with:
+```js
+const path = require('path')
+
+module.exports.onCreateNode = ({ node, actions }) => {
+  const { createNodeField } = actions
+  // target MarkdownRemark type nodes
+  if (node.internal.type === 'MarkdownRemark') {
+    // get filename, without extension
+    const slug = path.basename(node.fileAbsolutePath, '.md')
+    createNodeField({
+      node,
+      name: 'slug',
+      value: slug
+    });
+  }
+}
+```
