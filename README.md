@@ -116,10 +116,10 @@ where `container` is a class defined in `layout.module.scss`
 
 Use of GraphQL API to get data dynamically from various sources: CMS, Markdown files, API, databases, YAML, JSON or csv... 
 
-#### Query site configuration data in `gatsby-config-js`
+#### Query site configuration data in `gatsby-config.js`
 
 In `gatsby-config-js`, add:
-```json
+```js
   siteMetadata: {
     title: 'Portfolio',
     author: 'Olivier Valette',
@@ -152,7 +152,7 @@ Install the `gatsby-source-filesystem` plugin which creates File nodes from file
 npm install --save gatsby-source-filesystem
 ```
 some configuration is needed adding in file `gatsby-config-js`:
-```json
+```js
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -195,7 +195,7 @@ To get an array of nodes in `{posts.allMarkdownRemark.edges}`
 
 #### Adding data in nodes with the Gatsby Node API
 
-To add a slug for instance, first creat a In `gatsby-node-js` file with:
+To add a slug for instance, first create a `gatsby-node.js` file with:
 ```js
 const path = require('path')
 
