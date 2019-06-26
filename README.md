@@ -54,7 +54,7 @@ Following [The Great Gatsby Bootcamp](https://www.youtube.com/watch?v=kzWIUX3Cpu
       "env-cmd -f .env.development gatsby develop"
       ```
 
-##  Tutorial
+## 👨🏻‍🏫 Tutorial
 
 ### Pages 
 
