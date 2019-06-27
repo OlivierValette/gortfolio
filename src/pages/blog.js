@@ -29,14 +29,14 @@ const BlogPage = () => {
   const postList = posts.allMarkdownRemark.edges.map( (edge, index) => {
     return (
       <li key={index}>
-        <Link to={'/blog/' + edge.node.fields.slug} className={blogStyles.shortPost}>
-          <h2 className={blogStyles.shortPostHeader}>
+        <Link to={'/blog/' + edge.node.fields.slug} className={blogStyles.post}>
+          <h2 className={blogStyles.postHeader}>
             {edge.node.frontmatter.title}{' '}
           </h2>
-          <p className={blogStyles.shortPostTimestamp}>
+          <p className={blogStyles.postTimestamp}>
             {edge.node.frontmatter.date}
           </p>
-          <p className={blogStyles.shortPostParagraph}>
+          <p className={blogStyles.postParagraph}>
             {edge.node.excerpt}
           </p>
         </Link>
@@ -47,7 +47,7 @@ const BlogPage = () => {
   return (
     <Layout>
       <h1>Blog</h1>
-      <ol className={blogStyles.shortPostList}>{postList}</ol>
+      <ol className={blogStyles.postList}>{postList}</ol>
     </Layout>
   )
 }

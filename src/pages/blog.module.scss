@@ -1,16 +1,16 @@
-$blue: #3c66c2;
+$blue: #3458a8;
 $black: #162546;
 $bg: #f3f4f8;
 
-.short-post-list {
+.post-list {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-.short-post {
+.post {
     border-left: 5px solid $blue;
     background-color: $bg;
-    color: $black;
+    color: $blue;
     display: block;
     padding-left: 15px;
     text-decoration: none;
@@ -20,13 +20,15 @@ $bg: #f3f4f8;
         margin-top: 0;
     }
     &-timestamp {
-        font-size: 0.9em;
+        font-size: 0.9rem;
+        font-style: italic;
     }
     &-paragraph {
         text-align: justify;
         text-indent: 1.5em;
     }
     &:hover {
-        color: $blue;
+        color: $black;
+        background-color: $bg - 10;
     }
 }
