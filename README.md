@@ -305,3 +305,34 @@ Then create new pages for each node:
     })
   })
 ```
+
+### images
+
+Using images in markdown posts:
+```md
+![Grass](./grass.jpg)
+```
+
+Another 3 plugins are necessary to tell Gatsby how to connect images.
+```sh
+npm install gatsby-plugin-sharp gatsby-remark-images gatsby-remark-relative-images
+```
+with configuration:
+```js
+    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-transformer-remark',
+      options: {
+        plugins: [
+          'gatsby-remark-relative-images',
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 750,
+              linkImagesToOriginal: false,
+            }
+          }
+        ]
+      }
+    },
+```

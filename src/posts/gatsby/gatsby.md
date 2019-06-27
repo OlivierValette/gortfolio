@@ -5,6 +5,8 @@ date: "2019-06-26"
 
 I just followed a new bootcamp!
 
+![Grass](./grass.jpg)
+
 ## Topics Covered
 
 1. Gatsby
