@@ -114,7 +114,13 @@ where `container` is a class defined in `layout.module.scss`
 
 ### GraphQL API
 
-Use of GraphQL API to get data dynamically from various sources: CMS, Markdown files, API, databases, YAML, JSON or csv... 
+Use of GraphQL API to get data dynamically from various sources: CMS, Markdown files, API, databases, YAML, JSON or csv...
+
+GraphQL is a query language for APIs. GraphQL APIs have been widely adopted by developers because of some of the benefits
+they offer over RESTful APIs. One of the biggest benefits is that GraphQL allows for smarter and more precise querying 
+which is especially useful when working with large APIs that return a lot of data. 
+GraphQL enables users to specify exactly what data they get back in their response – nothing more, and nothing less; 
+and it allows querying for multiple fields in a single request.
 
 #### Query site configuration data in `gatsby-config.js`
 
@@ -151,7 +157,7 @@ Install the `gatsby-source-filesystem` plugin which creates File nodes from file
 ```sh
 npm install --save gatsby-source-filesystem
 ```
-some configuration is needed adding in file `gatsby-config-js`:
+some configuration is needed adding in file `gatsby-config.js`:
 ```js
     {
       resolve: `gatsby-source-filesystem`,
@@ -212,4 +218,44 @@ module.exports.onCreateNode = ({ node, actions }) => {
     });
   }
 }
+```
+
+#### Adding pages dynamically
+
+This is done with the Gatsby Node API `creatPages`, thus in `gatsby-node.js` file, with an `async` in order to wait for
+the graphql query response used to retrieve the slug:
+```js
+module.exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+  // get path to template
+  const postTemplate = path.resolve('./src/templates/post.js');
+  // get markdown data
+  const res = await graphql(`
+    query {
+      allMarkdownRemark {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
+  // create new pages
+}
+```
+Then create new pages for each node
+```js
+  // create new pages
+  res.data.allMarkdownRemark.edges.forEach( (edge) => {
+    createPage({
+      component: postTemplate,
+      path: `/blog/${edge.node.fields.slug}`,
+      context: {
+        slug: edge.node.fields.slug
+      }
+    })
+  })
 ```
