@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/header.js';
 import Footer from '../components/footer.js';
 
-import '../styles/index.scss';
+import '../styles/reset.scss';
 import layoutStyles from './layout.module.scss';
 
 const Layout = (props) => {

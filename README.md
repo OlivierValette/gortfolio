@@ -98,19 +98,51 @@ module.exports = {
 A reset css file, which can be inserted in the `index.scss` file, can be found at links.mead.io/gatsbystyles 
 
 
-### CSS Modules
+#### CSS Modules
 
 CSS modules allow to define locally scoped styles.
+
+A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
+
+CSS Modules automatically generates unique class and animation names, avoiding selector name collisions.
+
 For a component Layout of a `layout.js` file for instance, scss is defined in a `layout.module.scss` associated file.
 Style is imported with:
 ```js
 import layoutStyles from './layout.module.scss';
 ```
-and used with:
+When importing the CSS Module from a JS Module, it exports an object with all mappings from local names to global names.
+So it can be used with:
 ```jsx harmony
 <div className={layoutStyles.container}>
 ```
 where `container` is a class defined in `layout.module.scss`
+
+#### Typography.js
+`Typography.js` is a JavaScript library which generates global base styles for your site’s typography.
+The library has a corresponding Gatsby plugin to streamline using it in a Gatsby site.
+```sh
+npm install --save gatsby-plugin-typography react-typography typography
+npm install --save typography typography-theme-ocean-beach
+```
+and configure it in the `gatsby-config.js` file:
+```js
+    {
+      resolve: `gatsby-plugin-typography`,
+      options: {
+        pathToConfigModule: `src/utils/typography`,
+      },
+    },
+```
+`pathToConfigModule` option gives the path to the configuration file needed by Typography.js:
+```js
+import Typography from "typography"
+import oceanBeachTheme from 'typography-theme-ocean-beach'
+
+const typography = new Typography(oceanBeachTheme)
+export const { scale, rhythm, options } = typography
+export default typography
+```
 
 ### GraphQL API
 

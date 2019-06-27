@@ -1,0 +1,19 @@
+$blue: #3c66c2;
+$black: #162546;
+$bg: #f3f4f8;
+
+.post-header {
+    border-left: 5px solid $blue;
+    background-color: $bg;
+    color: $black;
+    display: block;
+    padding-left: 15px;
+    text-decoration: none;
+    &-title {
+        margin-bottom: 5px;
+        margin-top: 0;
+    }
+    &-timestamp {
+        font-size: 0.9em;
+    }
+}

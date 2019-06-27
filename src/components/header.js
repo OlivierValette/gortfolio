@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, graphql, useStaticQuery } from 'gatsby';
 
-// import './header.module.scss'
 import headerStyles from './header.module.scss';
 
 const Header = () => {
