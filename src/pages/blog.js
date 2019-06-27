@@ -7,7 +7,8 @@ const BlogPage = () => {
 
   const posts = useStaticQuery(graphql`
     query {
-      allMarkdownRemark {
+      allMarkdownRemark (sort: { fields: [frontmatter___date], order: DESC }) {
+        totalCount
         edges {
           node {
             frontmatter {
@@ -17,6 +18,7 @@ const BlogPage = () => {
             fields {
               slug
             }
+            excerpt
           }
         }
       }
@@ -27,8 +29,8 @@ const BlogPage = () => {
     return (
       <li key={index}>
         <Link to={'/blog/' + edge.node.fields.slug}>
-          <h2>{edge.node.frontmatter.title}</h2>
-          <p>{edge.node.frontmatter.date}</p>
+          <h2>{edge.node.frontmatter.title}{' '}{edge.node.frontmatter.date}</h2>
+          <p>{edge.node.excerpt}</p>
         </Link>
       </li>
     )

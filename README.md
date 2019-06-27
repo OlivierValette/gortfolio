@@ -148,7 +148,12 @@ execute query:
     }
   `);
 ```
-and use data retrieved using the same structure 
+Page queries live outside of the component definition — by convention at the end of a page component file —
+and are only available on page components.
+`StaticQuery` is a new API introduced in Gatsby v2 that allows non-page components (like `layout.js` component),
+to retrieve data via GraphQL queries, its newly introduced hook version is `useStaticQuery`.
+
+Finally access to retrieved data using the same structure 
 `{data.site.siteMetadata.title}`
 
 #### Query data in other files
@@ -201,7 +206,10 @@ To get an array of nodes in `{posts.allMarkdownRemark.edges}`
 
 #### Adding data in nodes with the Gatsby Node API
 
-To add a slug for instance, first create a `gatsby-node.js` file with:
+To add a slug for instance, first create a `gatsby-node.js` file 
+with the `onCreateNode` function which will be called by Gatsby 
+whenever a new node is created (or updated) and the `createNodeField` 
+function which create additional fields on nodes created by other plugins:
 ```js
 const path = require('path')
 
@@ -220,7 +228,7 @@ module.exports.onCreateNode = ({ node, actions }) => {
 }
 ```
 
-#### Adding pages dynamically
+#### Creating pages dynamically
 
 This is done with the Gatsby Node API `creatPages`, thus in `gatsby-node.js` file, with an `async` in order to wait for
 the graphql query response used to retrieve the slug:
@@ -246,13 +254,19 @@ module.exports.createPages = async ({ graphql, actions }) => {
   // create new pages
 }
 ```
-Then create new pages for each node
+Like everything in Gatsby, programmatic pages are powered by React components.
+When creating a page, you need to specify which component to use.
+Add a directory at `src/templates`
+Add a file named `src/templates/post.js`
+`postTemplate` is the path to this file.
+
+Then create new pages for each node:
 ```js
   // create new pages
   res.data.allMarkdownRemark.edges.forEach( (edge) => {
     createPage({
-      component: postTemplate,
       path: `/blog/${edge.node.fields.slug}`,
+      component: postTemplate,
       context: {
         slug: edge.node.fields.slug
       }
