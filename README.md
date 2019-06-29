@@ -336,3 +336,31 @@ with configuration:
       }
     },
 ```
+
+### Sourcing CMS (Contentful)
+In this example, Contenful has been choosen. 
+Same can be done with WordPress or Drupal.
+
+Install the `gatsby-source-contentful` plugin:
+```sh
+npm install --save gatsby-source-contentful
+```
+some configuration is needed adding in file `gatsby-config.js`:
+```js
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      },
+    },
+```
+`spaceId` and `accessToken` parameters are accessed with the `.env.development` file.
+Their values are copied from Contentful settings page in this file:
+```dotenv
+CONTENTFUL_SPACE_ID=xa3wfrfrefvd4
+CONTENTFUL_ACCESS_TOKEN=id2TMkljhupr6pi99swJTbgbQHDsPImEH-74Svsx9w
+```
+
+Once the plugin added, Contentful blog posts can be fetched with graphQL `allContentfulBlogPost`.
+
