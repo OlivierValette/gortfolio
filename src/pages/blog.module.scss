@@ -29,6 +29,6 @@ $bg: #f3f4f8;
     }
     &:hover {
         color: $black;
-        background-color: $bg - 10;
+        background-color: scale-color($bg, $lightness: -20%);
     }
 }
