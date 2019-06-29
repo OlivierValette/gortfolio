@@ -6,7 +6,8 @@ import blogStyles from "./blog.module.scss"
 
 const BlogPage = () => {
 
-  const posts = useStaticQuery(graphql`
+/*  MARKDOWN VERSION
+const posts = useStaticQuery(graphql`
     query {
       allMarkdownRemark (sort: { fields: [frontmatter___date], order: DESC }) {
         totalCount
@@ -25,7 +26,29 @@ const BlogPage = () => {
       }
     }
   `);
+*/
+/*  CONTENTFUL CMS VERSION
+*/
+const posts = useStaticQuery(graphql`
+  query {
+    allContentfulBlogPost (
+      sort: {
+        fields:publishedDate,
+        order: DESC
+      }
+    ) {
+      edges {
+        node {
+          title
+          slug
+          publishedDate(formatString:"DD/MM/YYYY")
+        }
+      }
+    }
+  }
+`);
 
+/*  MARKDOWN VERSION
   const postList = posts.allMarkdownRemark.edges.map( (edge, index) => {
     return (
       <li key={index}>
@@ -38,6 +61,23 @@ const BlogPage = () => {
           </p>
           <p className={blogStyles.postParagraph}>
             {edge.node.excerpt}
+          </p>
+        </Link>
+      </li>
+    )
+  });
+*/
+/*  CONTENTFUL CMS VERSION
+*/
+  const postList = posts.allContentfulBlogPost.edges.map( (edge, index) => {
+    return (
+      <li key={index}>
+        <Link to={'/blog/' + edge.node.slug} className={blogStyles.post}>
+          <h2 className={blogStyles.postHeader}>
+            {edge.node.title}{' '}
+          </h2>
+          <p className={blogStyles.postTimestamp}>
+            {edge.node.publishedDate}
           </p>
         </Link>
       </li>

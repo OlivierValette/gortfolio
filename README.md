@@ -363,4 +363,62 @@ CONTENTFUL_ACCESS_TOKEN=id2TMkljhupr6pi99swJTbgbQHDsPImEH-74Svsx9w
 ```
 
 Once the plugin added, Contentful blog posts can be fetched with graphQL `allContentfulBlogPost`.
+```js
+const posts = useStaticQuery(graphql`
+  query {
+    allContentfulBlogPost (
+      sort: {
+        fields:publishedDate,
+        order: DESC
+      }
+    ) {
+      edges {
+        node {
+          title
+          slug
+          publishedDate(formatString:"DD/MM/YYYY")
+        }
+      }
+    }
+  }
+`);
+```
+And posts retrieved with **one more plugin**.
+The body of the post is in rich-text format and may contains assets (image for instance).
+This complex body is retrieved in json format, the plugin allow to render the json directly in React components.
+
+Install the plugin:
+```sh
+npm i @contentful/rich-text-rect-renderer
+```
+And use the `documentToReactComponents` function this way:
+```js
+const Post = (props) => {
+  // options for image rendering
+  const options = {
+    renderNode: {
+      "embedded-asset-block": (node) => {
+        const alt = node.data.target.fields.title['en-US'];
+        const url = node.data.target.fields.file['en-US'].url;
+        return <img alt={alt} src={url} />
+      }
+    }
+  }
+  return (
+    <Layout>
+      <h1>Blog</h1>
+      <div className={postStyles.postHeader}>
+        <h2 className={postStyles.postHeaderTitle}>
+          {props.data.contentfulBlogPost.title}
+        </h2>
+        <p className={postStyles.postHeaderTimestamp}>
+          {props.data.contentfulBlogPost.publishedDate}
+        </p>
+      </div>
+      {documentToReactComponents(props.data.contentfulBlogPost.body.json, options)}
+    </Layout>
+  )
+}
+export default Post
+```
 
