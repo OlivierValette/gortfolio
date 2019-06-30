@@ -462,4 +462,29 @@ export default Head;
 
 ## Deploying a Gatsby site (Netlify)
 
-### Preprod commit
+Netlify is an excellent option for deploying Gatsby sites.
+Netlify is a unified platform that automates your code to create high-performant, easily maintainable sites, 
+and web apps. They provide continuous deployment (Git-triggered builds), an intelligent, global CDN, 
+full DNS (including custom domains), automated HTTPS, asset acceleration, and a lot more.
+
+Their free tier includes unlimited personal and commercial projects, HTTPS, continuous deployment 
+from public or private repos and more.
+
+#### Deploy from a Git Repository
+- Login to Netlify
+- Select `New site from git` button
+- Connect with the same git provider that you used to host your website
+- Authorize Netlify to use your account
+- Choose your website repository
+- Define the **environment variables** as they are defined in the `.env` file (which is not committed).
+   -  CONTENTFUL_SPACE_ID
+   -  CONTENTFUL_ACCESS_TOKEN
+- Deploy site
+
+#### Continuous Deployment
+
+1. When **changing content** on Contentful:
+  Deploy manually with `Trigger deploy` button.
+  
+2. When **changing code**:
+  git commit and push to automatically trigger a deploy.
