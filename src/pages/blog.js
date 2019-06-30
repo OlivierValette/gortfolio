@@ -3,9 +3,9 @@ import { Link, graphql, useStaticQuery } from "gatsby"
 
 import Layout from "../components/layout"
 import blogStyles from "./blog.module.scss"
+import Head from '../components/head.js'
 
 const BlogPage = () => {
-
 /*  MARKDOWN VERSION
 const posts = useStaticQuery(graphql`
     query {
@@ -27,8 +27,7 @@ const posts = useStaticQuery(graphql`
     }
   `);
 */
-/*  CONTENTFUL CMS VERSION
-*/
+/*  CONTENTFUL CMS VERSION  */
 const posts = useStaticQuery(graphql`
   query {
     allContentfulBlogPost (
@@ -47,7 +46,6 @@ const posts = useStaticQuery(graphql`
     }
   }
 `);
-
 /*  MARKDOWN VERSION
   const postList = posts.allMarkdownRemark.edges.map( (edge, index) => {
     return (
@@ -67,8 +65,7 @@ const posts = useStaticQuery(graphql`
     )
   });
 */
-/*  CONTENTFUL CMS VERSION
-*/
+/*  CONTENTFUL CMS VERSION  */
   const postList = posts.allContentfulBlogPost.edges.map( (edge, index) => {
     return (
       <li key={index}>
@@ -83,13 +80,12 @@ const posts = useStaticQuery(graphql`
       </li>
     )
   });
-
   return (
     <Layout>
+      <Head title="Blog"/>
       <h1>Blog</h1>
       <ol className={blogStyles.postList}>{postList}</ol>
     </Layout>
   )
 }
-
 export default BlogPage;

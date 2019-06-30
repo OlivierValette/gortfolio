@@ -422,3 +422,43 @@ const Post = (props) => {
 export default Post
 ```
 
+### React Helmet
+Adding metadata to pages (such as a title or description) is key in helping search engines like Google understand your
+content and decide when to surface it in search results.
+
+React Helmet is a package that provides a React component interface for you to manage your document head.
+
+Install the plugin:
+```sh
+npm install --save gatsby-plugin-react-helmet react-helmet
+```
+And just add `gatsby-plugin-react-helmet` in th plugin list in `gatsby-config.js`
+
+Adding a `Head` component for title rendering:
+```js
+import React from 'react';
+import { Helmet } from "react-helmet";
+import { useStaticQuery, graphql } from 'gatsby';
+
+const Head = ({ title }) => {
+  const data = useStaticQuery(graphql`
+    query {
+        site {
+            siteMetadata {
+                title
+            }
+        }
+    }
+  `);
+  return (
+    <Helmet>
+      <meta charSet="utf-8"/>
+      <title>{`${title} | ${data.site.siteMetadata.title}`} </title>
+    </Helmet>
+  );
+}
+export default Head;
+```
+
+## Deploying a Gatsby site (Netlify)
+

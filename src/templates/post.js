@@ -1,8 +1,8 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { documentToReactComponents} from "@contentful/rich-text-react-renderer"
-
 import Layout from '../components/layout.js';
+import Head from '../components/head.js'
 import postStyles from '../templates/post.module.scss';
 
 // MARKDOWN VERSION
@@ -36,6 +36,7 @@ const Post = (props) => {
   }
   return (
     <Layout>
+      <Head title={props.data.contentfulBlogPost.title}/>
       <h1>Blog</h1>
       <div className={postStyles.postHeader}>
         <h2 className={postStyles.postHeaderTitle}>
