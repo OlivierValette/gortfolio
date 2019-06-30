@@ -51,7 +51,7 @@ Following [The Great Gatsby Bootcamp](https://www.youtube.com/watch?v=kzWIUX3Cpu
      ```
      and change `develop` script in `package.json` with:
      ```json
-      "env-cmd -f .env.development gatsby develop"
+      .env
       ```
 
 ## 👨🏻‍🏫 Tutorial
@@ -462,3 +462,4 @@ export default Head;
 
 ## Deploying a Gatsby site (Netlify)
 
+### Preprod commit
